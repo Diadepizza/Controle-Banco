@@ -14,9 +14,9 @@ conexao = conectar()
 cursor = conexao.cursor()
 
 botao1 = tk.Button(text="Produção por Hora",font=("Comic Sans MS", 24),bg="#170C22",fg="white",width=28,command=porhora)
-botao1.grid(row=5, column=0, padx=256, pady=(430,0))
+botao1.grid(row=5, column=0, padx=256, pady=(450,0))
 botao2 = tk.Button(text="Produção por Dia",font=("Comic Sans MS", 24),bg="#170C22",fg="white",width=28,command=pordia)
-botao2.grid(row=6, column=0, padx=256, pady=(10,0))
+botao2.grid(row=6, column=0, padx=256, pady=(50,0))
 
 
 
