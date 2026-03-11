@@ -16,11 +16,6 @@ def showFrame(frame):
         f.pack_forget()
     frame.pack()
 
-def hourSearch(d,m,y):
-    day = d.get()
-    month = m.get()
-    year = y.get()
-    print(day)
 def daySearch():
     print("daySearch Working")
 
@@ -34,7 +29,14 @@ def porhora():
     mes.grid(row=2, column=3, padx=(20,20), pady=80)
     ano = tk.Entry(tela_porhora)
     ano.grid(row=2, column=4, padx=(20,20), pady=80)
-    pesquisa = tk.Button(tela_porhora, text="=>", command= hourSearch(dia,mes,ano)).grid(row=2, column=5, padx=(20,20), pady=80)
+    def hourSearch():
+        day = dia.get()
+        month = mes.get()
+        year = ano.get()
+        print(f"{day}/{month}/{year}")
+        #cursor.execute(f"SELECT *FROM usuarios WHERE DATE(dataEhorario) = '{day}-{month}-{year}';")
+    pesquisa = tk.Button(tela_porhora, text="=>", command= hourSearch)
+    pesquisa.grid(row=2, column=5, padx=(20,20), pady=80)
 
 
 def pordia():
