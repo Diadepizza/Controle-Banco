@@ -16,18 +16,15 @@ def showFrame(frame):
         f.pack_forget()
     frame.pack()
 
-def daySearch():
-    print("daySearch Working")
-
 def porhora():
 
     print("Working")
     showFrame(tela_porhora)
-    dia = tk.Entry(tela_porhora)
+    dia = tk.Entry(tela_porhora,font=("Comic Sans MS", 20),fg="gray",width=3)
     dia.grid(row=2, column=2, padx=(45,20), pady=80)
-    mes = tk.Entry(tela_porhora)
+    mes = tk.Entry(tela_porhora,font=("Comic Sans MS", 20),fg="gray",width=3)
     mes.grid(row=2, column=3, padx=(20,20), pady=80)
-    ano = tk.Entry(tela_porhora)
+    ano = tk.Entry(tela_porhora,font=("Comic Sans MS", 20),fg="gray",width=5)
     ano.grid(row=2, column=4, padx=(20,20), pady=80)
     def hourSearch():
         day = dia.get()
@@ -37,12 +34,48 @@ def porhora():
         #cursor.execute(f"SELECT *FROM usuarios WHERE DATE(dataEhorario) = '{day}-{month}-{year}';")
     pesquisa = tk.Button(tela_porhora, text="=>", command= hourSearch)
     pesquisa.grid(row=2, column=5, padx=(20,20), pady=80)
+    dia.insert(0, "DD")
+    def digitarDD(event):
+        if dia.get() == "DD":
+            dia.delete(0, tk.END)
+            dia.config(fg="#363636")
+    def sairDD(event):
+        if dia.get() == "":
+            dia.insert(0, "DD")
+            dia.config(fg="gray")
+    dia.bind("<FocusIn>", digitarDD)
+    dia.bind("<FocusOut>", sairDD)
+    mes.insert(0, "MM")
+    def digitarMM(event):
+        if mes.get() == "MM":
+            mes.delete(0, tk.END)
+            mes.config(fg="#363636")
+    def sairMM(event):
+        if mes.get() == "":
+            mes.insert(0, "MM")
+            mes.config(fg="gray")
+    mes.bind("<FocusIn>", digitarMM)
+    mes.bind("<FocusOut>", sairMM)
+    ano.insert(0, "YYYY")
+    def digitarYYYY(event):
+        if ano.get() == "YYYY":
+            ano.delete(0, tk.END)
+            ano.config(fg="#363636")
+    def sairYYYY(event):
+        if ano.get() == "":
+            ano.insert(0, "YYYY")
+            ano.config(fg="gray")
+    ano.bind("<FocusIn>", digitarYYYY)
+    ano.bind("<FocusOut>", sairYYYY)
 
 
 def pordia():
 
     print("Working too!")
     showFrame(tela_pordia)
+    def daySearch():
+        print("daySearch Working")
+
 
 showFrame(tela_menu)
 botao1 = tk.Button(tela_menu,text="Produção por Hora",font=("Comic Sans MS", 24),bg="#170C22",fg="white",width=28,command=porhora)
