@@ -31,9 +31,10 @@ def porhora():
         month = mes.get()
         year = ano.get()
         print(f"{day}/{month}/{year}")
-        #cursor.execute(f"SELECT *FROM usuarios WHERE DATE(dataEhorario) = '{day}-{month}-{year}';")
+        #cursor.execute(f"SELECT * FROM producao WHERE DATE(dataEhorario) = '{day}-{month}-{year}';")
     pesquisa = tk.Button(tela_porhora, text="=>", command= hourSearch)
     pesquisa.grid(row=2, column=5, padx=(20,20), pady=80)
+    
     dia.insert(0, "DD")
     def digitarDD(event):
         if dia.get() == "DD":
@@ -67,6 +68,8 @@ def porhora():
             ano.config(fg="gray")
     ano.bind("<FocusIn>", digitarYYYY)
     ano.bind("<FocusOut>", sairYYYY)
+
+    resPorhora = tk.Label(tela_porhora,text="",font=("Comic Sans MS", 20),fg="gray")
 
 
 def pordia():
