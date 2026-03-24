@@ -17,6 +17,11 @@ tela_porperiodo_mes = tk.Frame(janela, bg="#361C29")
 tela_porperiodo_dia = tk.Frame(janela, bg="#361C29")
 tela_porperiodo_hora = tk.Frame(janela, bg="#361C29")
 
+year = ""
+month = ""
+day = ""
+hour = ""
+
 def showFrame(frame):
     for f in (tela_menu, tela_entredatas, tela_porperiodo, tela_porperiodo_ano, tela_porperiodo_mes, tela_porperiodo_dia, tela_porperiodo_hora):
         f.pack_forget()
@@ -24,12 +29,17 @@ def showFrame(frame):
 
 def porperiodo():
     def porperiodoAno(year):
-        def porperiodoMes(month):
-            def porperiodoDia():
-                def porperiodoHora():
+        def porperiodoMes(year,month):
+            def porperiodoDia(year,month,day):
+                def porperiodoHora(year,month,day,hour):
                     showFrame(tela_porperiodo_hora)
                     # H O R A
                     #*texto*
+                    def voltar_hora():
+                        porperiodoDia(year,month,day)
+                    botaoVoltar_hora = tk.Button(tela_porperiodo_hora,text="←",font=("Comic Sans MS", 25),fg="white",bg="#361C29",command= voltar_hora)
+                    botaoVoltar_hora.grid(padx=(0,1100),pady=(0,500))
+                    print(year,month,day,hour)
 
                     #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   
                       #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   # 
@@ -37,7 +47,29 @@ def porperiodo():
 
                 showFrame(tela_porperiodo_dia)
                 # D I A
-                #*texto*
+                hora = tk.Entry(tela_porperiodo_dia,font=("Comic Sans MS", 23),fg="gray",width=3)
+                hora.grid(row=1, column=1, padx=(0,0), pady=(60,0))
+                hora.insert(0, "hh")
+                def digitarH(event):
+                    if hora.get() == "hh":
+                        hora.delete(0, tk.END)
+                        hora.config(fg="#363636")
+                def sairH(event):
+                    if hora.get() == "":
+                        hora.insert(0, "hh")
+                        hora.config(fg="gray")
+                hora.bind("<FocusIn>", digitarH)
+                hora.bind("<FocusOut>", sairH)
+
+                hora_text = tk.Label(tela_porperiodo_dia,text="Hora :",font=("Comic Sans MS", 23),fg="white",bg="#361C29")
+                hora_text.grid(row=1, column=0, padx=(0,10), pady=(60,0))
+
+                def hourSearch():
+                    hour = hora.get()
+                    porperiodoHora(year,month,day,hour)
+                    #cursor.execute(f"SELECT * FROM producao WHERE DATE(dataEhorario) = '{day}-{month}-{year}';")
+                pesquisaHora = tk.Button(tela_porperiodo_dia,text="Pesquisar",font=("Comic Sans MS", 16),fg="white",bg="#170C22",command= hourSearch)
+                pesquisaHora.grid(row=1, column=2, padx=(10,40), pady=(60,0))
 
                 #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   
                   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   # 
@@ -45,7 +77,29 @@ def porperiodo():
 
             showFrame(tela_porperiodo_mes)
             # M E S
-            #*texto*
+            dia = tk.Entry(tela_porperiodo_mes,font=("Comic Sans MS", 23),fg="gray",width=3)
+            dia.grid(row=1, column=1, padx=(0,0), pady=(60,0))
+            dia.insert(0, "DD")
+            def digitarDD(event):
+                if dia.get() == "DD":
+                    dia.delete(0, tk.END)
+                    dia.config(fg="#363636")
+            def sairDD(event):
+                if dia.get() == "":
+                    dia.insert(0, "DD")
+                    dia.config(fg="gray")
+            dia.bind("<FocusIn>", digitarDD)
+            dia.bind("<FocusOut>", sairDD)
+
+            dia_text = tk.Label(tela_porperiodo_mes,text="Dia :",font=("Comic Sans MS", 23),fg="white",bg="#361C29")
+            dia_text.grid(row=1, column=0, padx=(0,10), pady=(60,0))
+
+            def daySearch():
+                day = dia.get()
+                porperiodoDia(year,month,day)
+                #cursor.execute(f"SELECT * FROM producao WHERE DATE(dataEhorario) = '{day}-{month}-{year}';")
+            pesquisaDia = tk.Button(tela_porperiodo_mes,text="Pesquisar",font=("Comic Sans MS", 16),fg="white",bg="#170C22",command= daySearch)
+            pesquisaDia.grid(row=1, column=2, padx=(10,40), pady=(60,0))
 
             #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   
               #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   # 
@@ -53,7 +107,7 @@ def porperiodo():
 
         showFrame(tela_porperiodo_ano)
         # A N O
-        mes = tk.Entry(tela_porperiodo_ano,font=("Comic Sans MS", 23),fg="gray",width=5)
+        mes = tk.Entry(tela_porperiodo_ano,font=("Comic Sans MS", 23),fg="gray",width=4)
         mes.grid(row=1, column=1, padx=(0,0), pady=(60,0))
         mes.insert(0, "MM")
         def digitarMM(event):
@@ -72,7 +126,7 @@ def porperiodo():
 
         def monthSearch():
             month = mes.get()
-            porperiodoMes(month)
+            porperiodoMes(year,month)
             #cursor.execute(f"SELECT * FROM producao WHERE DATE(dataEhorario) = '{day}-{month}-{year}';")
         pesquisaMes = tk.Button(tela_porperiodo_ano,text="Pesquisar",font=("Comic Sans MS", 16),fg="white",bg="#170C22",command= monthSearch)
         pesquisaMes.grid(row=1, column=2, padx=(10,40), pady=(60,0))
