@@ -10,14 +10,14 @@ janela.grid_columnconfigure(0, weight=0)
 conexao = conectar()
 cursor = conexao.cursor()
 
-tela_menu = tk.Frame(janela, bg="#361C29",expand=False)
-tela_entredatas = tk.Frame(janela, bg="#361C29",expand=False)
-tela_porperiodo = tk.Frame(janela, bg="#361C29",expand=False)
+tela_menu = tk.Frame(janela, bg="#361C29")
+tela_entredatas = tk.Frame(janela, bg="#361C29")
+tela_porperiodo = tk.Frame(janela, bg="#361C29")
 
-tela_porperiodo_ano = tk.Frame(janela, bg="#361C29",expand=False)
-tela_porperiodo_mes = tk.Frame(janela, bg="#361C29",expand=False)
-tela_porperiodo_dia = tk.Frame(janela, bg="#361C29",expand=False)
-tela_porperiodo_hora = tk.Frame(janela, bg="#361C29",expand=False)
+tela_porperiodo_ano = tk.Frame(janela, bg="#361C29")
+tela_porperiodo_mes = tk.Frame(janela, bg="#361C29")
+tela_porperiodo_dia = tk.Frame(janela, bg="#361C29")
+tela_porperiodo_hora = tk.Frame(janela, bg="#361C29")
 
 year = ""
 month = ""
@@ -28,6 +28,25 @@ def showFrame(frame):
     for f in (tela_menu, tela_entredatas, tela_porperiodo, tela_porperiodo_ano, tela_porperiodo_mes, tela_porperiodo_dia, tela_porperiodo_hora):
         f.grid_forget()
     frame.grid(row=0, column=0, sticky="nsew")
+def mysql_scrollabel(frame,sizex,sizey,dados,labelname,textname,scrollname):
+    labelname = tk.Frame(frame, bg="black")
+    labelname.pack(fill="both", expand=False, padx=sizex, pady=sizey)
+
+    
+    scrollname = tk.Scrollbar(labelname)
+    scrollname.pack(side="right", fill="y")
+
+    textname = tk.Text(labelname,bg="black",fg="white",yscrollcommand=scrollname.set)
+    textname.pack(side="left", fill="both", expand=True)
+
+    scrollname.config(command=textname.yview)
+
+    textname.config(state="normal")
+    textname.delete("1.0", "end")
+    for linha in dados:
+        textname.insert("end", f"ID: {linha[0]} | Nome: {linha[1]}\n")
+    textname.config(state="disabled")
+
 
 def porperiodo():
     def porperiodoAno(year):
@@ -203,6 +222,7 @@ def main_menu():
     botao2.grid(row=6, column=0, padx=256, pady=(50,0))
 
 main_menu()
+
 
 #cursor.execute("SELECT COUNT(*) FROM usuarios")
 
