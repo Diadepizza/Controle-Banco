@@ -10,14 +10,14 @@ janela.grid_columnconfigure(0, weight=0)
 conexao = conectar()
 cursor = conexao.cursor()
 
-tela_menu = tk.Frame(janela, bg="#361C29")
-tela_entredatas = tk.Frame(janela, bg="#361C29")
-tela_porperiodo = tk.Frame(janela, bg="#361C29")
+tela_menu = tk.Frame(janela, bg="#361C29",expand=False)
+tela_entredatas = tk.Frame(janela, bg="#361C29",expand=False)
+tela_porperiodo = tk.Frame(janela, bg="#361C29",expand=False)
 
-tela_porperiodo_ano = tk.Frame(janela, bg="#361C29")
-tela_porperiodo_mes = tk.Frame(janela, bg="#361C29")
-tela_porperiodo_dia = tk.Frame(janela, bg="#361C29")
-tela_porperiodo_hora = tk.Frame(janela, bg="#361C29")
+tela_porperiodo_ano = tk.Frame(janela, bg="#361C29",expand=False)
+tela_porperiodo_mes = tk.Frame(janela, bg="#361C29",expand=False)
+tela_porperiodo_dia = tk.Frame(janela, bg="#361C29",expand=False)
+tela_porperiodo_hora = tk.Frame(janela, bg="#361C29",expand=False)
 
 year = ""
 month = ""
