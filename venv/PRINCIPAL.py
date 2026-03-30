@@ -333,7 +333,6 @@ def porperiodo():
     def yearSearch():
         year = ano.get()
         porperiodoAno(year)
-        #cursor.execute(f"SELECT * FROM producao WHERE DATE(dataEhorario) = '{day}-{month}-{year}';")
     pesquisaAno = tk.Button(tela_porperiodo,text="Pesquisar",font=("Comic Sans MS", 20),fg="white",bg="#170C22",command= yearSearch)
     pesquisaAno.grid(row=5, column=2, padx=(35,0), pady=(450,0))
 
@@ -347,11 +346,231 @@ def porperiodo():
     #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #   #    
 
 def entredatas():
-
-    print("Working too!")
     showFrame(tela_entredatas)
-    def daySearch():
-        print("daySearch Working")
+
+    def voltar_menu():
+        main_menu()
+    botaoVoltar_menu = tk.Button(tela_entredatas,text="←",font=("Comic Sans MS", 25),fg="white",bg="#361C29",command= voltar_menu)
+    botaoVoltar_menu.grid(row=0, column=0, sticky="nw")
+    
+    entre_text = tk.Label(tela_entredatas,text="ENTRE",font=("Comic Sans MS", 28),fg="white",bg="#361C29")
+    entre_text.grid(row=0, column=4, padx=0, pady=0)
+
+    hora_text = tk.Label(tela_entredatas,text="hora",font=("Comic Sans MS", 16),fg="white",bg="#361C29")
+    hora_text.grid(row=1, column=5, padx=0, pady=0)
+
+    seg_text = tk.Label(tela_entredatas,text="seg.",font=("Comic Sans MS", 16),fg="white",bg="#361C29")
+    seg_text.grid(row=1, column=9, padx=0, pady=0)
+    
+    ano = tk.Entry(tela_entredatas,font=("Comic Sans MS", 23),fg="gray",width=5)
+    ano.grid(row=2, column=0, padx=(240,0), pady=0)
+    ano.insert(0, "YYYY")
+    def digitarYYYY(event):
+        if ano.get() == "YYYY":
+            ano.delete(0, tk.END)
+            ano.config(fg="#363636")
+    def sairYYYY(event):
+        if ano.get() == "":
+            ano.insert(0, "YYYY")
+            ano.config(fg="gray")
+    ano.bind("<FocusIn>", digitarYYYY)
+    ano.bind("<FocusOut>", sairYYYY)
+
+    mes = tk.Entry(tela_entredatas,font=("Comic Sans MS", 23),fg="gray",width=4)
+    mes.grid(row=2, column=1, padx=0, pady=0)
+    mes.insert(0, "MM")
+    def digitarMM(event):
+        if mes.get() == "MM":
+            mes.delete(0, tk.END)
+            mes.config(fg="#363636")
+    def sairMM(event):
+        if mes.get() == "":
+            mes.insert(0, "MM")
+            mes.config(fg="gray")
+    mes.bind("<FocusIn>", digitarMM)
+    mes.bind("<FocusOut>", sairMM)
+
+    dia = tk.Entry(tela_entredatas,font=("Comic Sans MS", 23),fg="gray",width=3)
+    dia.grid(row=2, column=2, padx=0, pady=0)
+    dia.insert(0, "DD")
+    def digitarDD(event):
+        if dia.get() == "DD":
+            dia.delete(0, tk.END)
+            dia.config(fg="#363636")
+    def sairDD(event):
+        if dia.get() == "":
+            dia.insert(0, "DD")
+            dia.config(fg="gray")
+    dia.bind("<FocusIn>", digitarDD)
+    dia.bind("<FocusOut>", sairDD)
+
+    as_text = tk.Label(tela_entredatas,text="às",font=("Comic Sans MS", 28),fg="white",bg="#361C29")
+    as_text.grid(row=2, column=4, padx=0, pady=0)
+
+    hh = tk.Entry(tela_entredatas,font=("Comic Sans MS", 23),fg="gray",width=3)
+    hh.grid(row=2, column=5, padx=0, pady=0)
+    hh.insert(0, "00")
+    def digitarhh(event):
+        if hh.get() == "00":
+            hh.delete(0, tk.END)
+            hh.config(fg="#363636")
+    def sairhh(event):
+        if hh.get() == "":
+            hh.insert(0, "00")
+            hh.config(fg="gray")
+    hh.bind("<FocusIn>", digitarhh)
+    hh.bind("<FocusOut>", sairhh)
+
+    doispontos_text = tk.Label(tela_entredatas,text=":",font=("Comic Sans MS", 24),fg="white",bg="#361C29")
+    doispontos_text.grid(row=2, column=6, padx=0, pady=0)
+
+    min = tk.Entry(tela_entredatas,font=("Comic Sans MS", 23),fg="gray",width=3)
+    min.grid(row=2, column=7, padx=0, pady=0)
+    min.insert(0, "00")
+    def digitarmin(event):
+        if min.get() == "00":
+            min.delete(0, tk.END)
+            min.config(fg="#363636")
+    def sairmin(event):
+        if min.get() == "":
+            min.insert(0, "00")
+            min.config(fg="gray")
+    min.bind("<FocusIn>", digitarmin)
+    min.bind("<FocusOut>", sairmin)
+
+    doispontos2_text = tk.Label(tela_entredatas,text=":",font=("Comic Sans MS", 24),fg="white",bg="#361C29")
+    doispontos2_text.grid(row=2, column=8, padx=0, pady=0)
+
+    seg = tk.Entry(tela_entredatas,font=("Comic Sans MS", 23),fg="gray",width=3)
+    seg.grid(row=2, column=9, padx=0, pady=0)
+    seg.insert(0, "00")
+    def digitarseg(event):
+        if seg.get() == "00":
+            seg.delete(0, tk.END)
+            seg.config(fg="#363636")
+    def sairseg(event):
+        if seg.get() == "":
+            seg.insert(0, "00")
+            seg.config(fg="gray")
+    seg.bind("<FocusIn>", digitarseg)
+    seg.bind("<FocusOut>", sairseg)
+
+    min_text = tk.Label(tela_entredatas,text="min.",font=("Comic Sans MS", 16),fg="white",bg="#361C29")
+    min_text.grid(row=3, column=7, padx=0, pady=0)
+
+
+    E_text = tk.Label(tela_entredatas,text="&",font=("Comic Sans MS", 20),fg="white",bg="#361C29")
+    E_text.grid(row=4, column=4, padx=0, pady=0)
+
+
+    hora2_text = tk.Label(tela_entredatas,text="hora",font=("Comic Sans MS", 16),fg="white",bg="#361C29")
+    hora2_text.grid(row=5, column=5, padx=0, pady=0)
+
+    seg2_text = tk.Label(tela_entredatas,text="seg.",font=("Comic Sans MS", 16),fg="white",bg="#361C29")
+    seg2_text.grid(row=5, column=9, padx=0, pady=0)
+    
+    ano2 = tk.Entry(tela_entredatas,font=("Comic Sans MS", 23),fg="gray",width=5)
+    ano2.grid(row=6, column=0, padx=(240,0), pady=0)
+    ano2.insert(0, "YYYY")
+    def digitarYYYY2(event):
+        if ano2.get() == "YYYY":
+            ano2.delete(0, tk.END)
+            ano2.config(fg="#363636")
+    def sairYYYY2(event):
+        if ano2.get() == "":
+            ano2.insert(0, "YYYY")
+            ano2.config(fg="gray")
+    ano2.bind("<FocusIn>", digitarYYYY2)
+    ano2.bind("<FocusOut>", sairYYYY2)
+
+    mes2 = tk.Entry(tela_entredatas,font=("Comic Sans MS", 23),fg="gray",width=4)
+    mes2.grid(row=6, column=1, padx=0, pady=0)
+    mes2.insert(0, "MM")
+    def digitarMM2(event):
+        if mes2.get() == "MM":
+            mes2.delete(0, tk.END)
+            mes2.config(fg="#363636")
+    def sairMM2(event):
+        if mes2.get() == "":
+            mes2.insert(0, "MM")
+            mes2.config(fg="gray")
+    mes2.bind("<FocusIn>", digitarMM2)
+    mes2.bind("<FocusOut>", sairMM2)
+
+    dia2 = tk.Entry(tela_entredatas,font=("Comic Sans MS", 23),fg="gray",width=3)
+    dia2.grid(row=6, column=2, padx=0, pady=0)
+    dia2.insert(0, "DD")
+    def digitarDD2(event):
+        if dia2.get() == "DD":
+            dia2.delete(0, tk.END)
+            dia2.config(fg="#363636")
+    def sairDD2(event):
+        if dia2.get() == "":
+            dia2.insert(0, "DD")
+            dia2.config(fg="gray")
+    dia2.bind("<FocusIn>", digitarDD2)
+    dia2.bind("<FocusOut>", sairDD2)
+
+    as2_text = tk.Label(tela_entredatas,text="às",font=("Comic Sans MS", 28),fg="white",bg="#361C29")
+    as2_text.grid(row=6, column=4, padx=0, pady=0)
+
+    hh2 = tk.Entry(tela_entredatas,font=("Comic Sans MS", 23),fg="gray",width=3)
+    hh2.grid(row=6, column=5, padx=0, pady=0)
+    hh2.insert(0, "00")
+    def digitarhh2(event):
+        if hh.get() == "00":
+            hh.delete(0, tk.END)
+            hh.config(fg="#363636")
+    def sairhh2(event):
+        if hh2.get() == "":
+            hh2.insert(0, "00")
+            hh2.config(fg="gray")
+    hh2.bind("<FocusIn>", digitarhh2)
+    hh2.bind("<FocusOut>", sairhh2)
+
+    doispontos3_text = tk.Label(tela_entredatas,text=":",font=("Comic Sans MS", 24),fg="white",bg="#361C29")
+    doispontos3_text.grid(row=6, column=6, padx=0, pady=0)
+
+    min2 = tk.Entry(tela_entredatas,font=("Comic Sans MS", 23),fg="gray",width=3)
+    min2.grid(row=6, column=7, padx=0, pady=0)
+    min2.insert(0, "00")
+    def digitarmin2(event):
+        if min2.get() == "00":
+            min2.delete(0, tk.END)
+            min2.config(fg="#363636")
+    def sairmin2(event):
+        if min2.get() == "":
+            min2.insert(0, "00")
+            min2.config(fg="gray")
+    min2.bind("<FocusIn>", digitarmin2)
+    min2.bind("<FocusOut>", sairmin2)
+
+    doispontos4_text = tk.Label(tela_entredatas,text=":",font=("Comic Sans MS", 24),fg="white",bg="#361C29")
+    doispontos4_text.grid(row=6, column=8, padx=0, pady=0)
+
+    seg2 = tk.Entry(tela_entredatas,font=("Comic Sans MS", 23),fg="gray",width=3)
+    seg2.grid(row=6, column=9, padx=0, pady=0)
+    seg2.insert(0, "00")
+    def digitarseg2(event):
+        if seg2.get() == "00":
+            seg2.delete(0, tk.END)
+            seg2.config(fg="#363636")
+    def sairseg2(event):
+        if seg2.get() == "":
+            seg2.insert(0, "00")
+            seg2.config(fg="gray")
+    seg2.bind("<FocusIn>", digitarseg2)
+    seg2.bind("<FocusOut>", sairseg2)
+
+    min2_text = tk.Label(tela_entredatas,text="min.",font=("Comic Sans MS", 16),fg="white",bg="#361C29")
+    min2_text.grid(row=7, column=7, padx=0, pady=0)
+
+
+
+    def search():
+        year = ano.get()
+    pesquisa = tk.Button(tela_entredatas,text="Pesquisar",font=("Comic Sans MS", 20),fg="white",bg="#170C22",command= search)
+    pesquisa.grid(row=8, column=4, padx=0, pady=0)
 
 def main_menu():
     showFrame(tela_menu)
