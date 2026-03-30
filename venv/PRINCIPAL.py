@@ -38,30 +38,31 @@ def porperiodo():
                     
                     showFrame(tela_porperiodo_hora)
                     # H O R A
-                    hour_result(tela_porperiodo_hora,130,160)
                     def hour_result(frame,sizex,sizey):
                         labelname = tk.Frame(frame, bg="black")
-                        labelname.pack(fill="both", expand=False, padx=sizex, pady=sizey)
+                        labelname.grid(row=2, column=0, columnspan=3, padx=sizex, pady=sizey)
+                        labelname.grid_configure(padx=(220, 220))
 
     
                         scrollname = tk.Scrollbar(labelname)
-                        scrollname.pack(side="right", fill="y")
+                        scrollname.grid(row=0, column=1, sticky="ns")
 
                         textname = tk.Text(labelname,bg="black",fg="white",yscrollcommand=scrollname.set)
-                        textname.pack(side="left", fill="both", expand=False)
+                        textname.grid(row=0, column=0)
 
                         scrollname.config(command=textname.yview)
 
                         textname.config(state="normal")
                         textname.delete("1.0", "end")
-                        cursor.execute(f"SELECT dataEhorario, id, intervalo FROM producao WHERE dataEhorario BETWEEN '{year}-{month}-{day} {hour}:00:00' AND '{year}-{month}-{day} {hour}:59:00'")
+                        cursor.execute(f"SELECT dataEhorario, id, intervalo FROM producao WHERE dataEhorario BETWEEN '{int(year):04d}-{int(month):02d}-{int(day):02d} {int(hour):02d}:00:00' AND '{int(year):04d}-{int(month):02d}-{int(day):02d} {int(hour):02d}:59:59'")
                         dados = cursor.fetchall()
                         for linha in dados:
                             textname.insert("end", f"INSTANTE: {linha[0]} | ID: {linha[1]} | DELAY: {linha[2]}\n")
-                        cursor.execute(f"SELECT COUNT(*) FROM producao WHERE dataEhorario BETWEEN '{year}-{month}-{day} {hour}:00:00' AND '{year}-{month}-{day} {hour}:59:59'")
+                        cursor.execute(f"SELECT COUNT(*) FROM producao WHERE dataEhorario BETWEEN '{int(year):04d}-{int(month):02d}-{int(day):02d} {int(hour):02d}:00:00' AND '{int(year):04d}-{int(month):02d}-{int(day):02d} {int(hour):02d}:59:59'")
                         total = cursor.fetchone()[0]
                         textname.insert("end", f"\n T O T A L  H O R A  :  {total}")
                         textname.config(state="disabled")
+                    hour_result(tela_porperiodo_hora,130,160)
                     def voltar_hora():
                         porperiodoDia(year,month,day)
                     botaoVoltar_hora = tk.Button(tela_porperiodo_hora,text="←",font=("Comic Sans MS", 25),fg="white",bg="#361C29",command= voltar_hora)
@@ -96,36 +97,35 @@ def porperiodo():
                     porperiodoHora(year,month,day,hour)
                     #cursor.execute(f"SELECT * FROM producao WHERE DATE(dataEhorario) = '{day}-{month}-{year}';")
                 pesquisaHora = tk.Button(tela_porperiodo_dia,text="Pesquisar",font=("Comic Sans MS", 16),fg="white",bg="#170C22",command= hourSearch)
-                pesquisaHora.grid(row=1, column=2, padx=(10,40), pady=0)
+                pesquisaHora.grid(row=1, column=2, padx=(10,320), pady=0)
 
-                day_result(tela_porperiodo_dia,130,160)
                 def day_result(frame,sizex,sizey):
                     labelname = tk.Frame(frame, bg="black")
-                    labelname.pack(fill="both", expand=False, padx=sizex, pady=sizey)
-
+                    labelname.grid(row=2, column=0, columnspan=3, padx=sizex, pady=sizey)
+                    labelname.grid_configure(padx=(220, 220))
     
                     scrollname = tk.Scrollbar(labelname)
-                    scrollname.pack(side="right", fill="y")
+                    scrollname.grid(row=0, column=1, sticky="ns")
 
                     textname = tk.Text(labelname,bg="black",fg="white",yscrollcommand=scrollname.set)
-                    textname.pack(side="left", fill="both", expand=False)
-
+                    textname.grid(row=0, column=0)
                     scrollname.config(command=textname.yview)
 
                     textname.config(state="normal")
                     textname.delete("1.0", "end")
                     #TOTAL DIÁRIO
-                    cursor.execute(f"SELECT COUNT(*) FROM producao WHERE dataEhorario BETWEEN '{year}-{month}-{day} 00:00:00' AND '{year}-{month}-{day} 23:59:59'")
+                    cursor.execute(f"SELECT COUNT(*) FROM producao WHERE dataEhorario BETWEEN '{int(year):04d}-{int(month):02d}-{int(day):02d} 00:00:00' AND '{int(year):04d}-{int(month):02d}-{int(day):02d} 23:59:59'")
                     total = cursor.fetchone()[0]
 
                     #TABELA ( & TOTAL POR HORA)
                     for hh in range(0,24):
-                        cursor.execute(f"SELECT COUNT(*) FROM producao WHERE dataEhorario BETWEEN '{year}-{month}-{day} {hh}:00:00' AND '{year}-{month}-{day} {hh}:59:00'")
+                        cursor.execute(f"SELECT COUNT(*) FROM producao WHERE dataEhorario BETWEEN '{int(year):04d}-{int(month):02d}-{int(day):02d} {hh:02d}:00:00' AND '{int(year):04d}-{int(month):02d}-{int(day):02d} {hh:02d}:59:59'")
                         total_hora = cursor.fetchone()[0]
-                        textname.insert("end", f"Dia: {hh} | Produção: {total_hora}\n")
+                        textname.insert("end", f"Hora: {hh:02d} | Produção: {total_hora}\n")
                     textname.insert("end", f"\n T O T A L  D I Á R I O  :  {total}")
                     textname.config(state="disabled")
-                    
+                day_result(tela_porperiodo_dia,130,160)
+
                 def voltar_dia():
                     porperiodoMes(year,month)
                 botaoVoltar_dia = tk.Button(tela_porperiodo_dia,text="←",font=("Comic Sans MS", 25),fg="white",bg="#361C29",command= voltar_dia)
@@ -159,20 +159,20 @@ def porperiodo():
                 porperiodoDia(year,month,day)
                 #cursor.execute(f"SELECT * FROM producao WHERE DATE(dataEhorario) = '{day}-{month}-{year}';")
             pesquisaDia = tk.Button(tela_porperiodo_mes,text="Pesquisar",font=("Comic Sans MS", 16),fg="white",bg="#170C22",command= daySearch)
-            pesquisaDia.grid(row=1, column=2, padx=(10,40), pady=0)
+            pesquisaDia.grid(row=1, column=2, padx=(10,320), pady=0)
 
-            month_result(tela_porperiodo_mes,130,160)
             def month_result(frame,sizex,sizey):
                 year_int = int(year)
                 labelname = tk.Frame(frame, bg="black")
-                labelname.pack(fill="both", expand=False, padx=sizex, pady=sizey)
+                labelname.grid(row=2, column=0, columnspan=3, padx=sizex, pady=sizey)
+                labelname.grid_configure(padx=(220, 220))
 
     
                 scrollname = tk.Scrollbar(labelname)
-                scrollname.pack(side="right", fill="y")
+                scrollname.grid(row=0, column=1, sticky="ns")
 
                 textname = tk.Text(labelname,bg="black",fg="white",yscrollcommand=scrollname.set)
-                textname.pack(side="left", fill="both", expand=False)
+                textname.grid(row=0, column=0)
 
                 scrollname.config(command=textname.yview)
 
@@ -194,17 +194,18 @@ def porperiodo():
                     ap = 31
 
                 #TOTAL MENSAL
-                cursor.execute(f"SELECT COUNT(*) FROM producao WHERE dataEhorario BETWEEN '{year_int}-{month}-01 00:00:00' AND '{year_int}-{month}-{apocalipse} 23:59:59'")
+                cursor.execute(f"SELECT COUNT(*) FROM producao WHERE dataEhorario BETWEEN '{int(year):04d}-{int(month):02d}-01 00:00:00' AND '{int(year):04d}-{int(month):02d}-{int(apocalipse)} 23:59:59'")
                 total = cursor.fetchone()[0]
 
                 #TABELA ( & TOTAL POR DIA)
                 for dd in range(1,ap):
-                    cursor.execute(f"SELECT COUNT(*) FROM producao WHERE dataEhorario BETWEEN '{year_int}-{month}-{dd} 00:00:00' AND '{year_int}-{month}-{dd} 23:59:59'")
+                    cursor.execute(f"SELECT COUNT(*) FROM producao WHERE dataEhorario BETWEEN '{int(year):04d}-{int(month):02d}-{dd:02d} 00:00:00' AND '{int(year):04d}-{int(month):02d}-{dd:02d} 23:59:59'")
                     total_dia = cursor.fetchone()[0]
                     textname.insert("end", f"Dia: {dd} | Produção: {total_dia}\n")
                 textname.insert("end", f"\n T O T A L  M E N S A L  :  {total}")
                 textname.config(state="disabled")
-                    
+            month_result(tela_porperiodo_mes,130,160)
+
             def voltar_mes():
                 porperiodoAno(year)
             botaoVoltar_mes = tk.Button(tela_porperiodo_mes,text="←",font=("Comic Sans MS", 25),fg="white",bg="#361C29",command= voltar_mes)
@@ -238,20 +239,20 @@ def porperiodo():
             porperiodoMes(year,month)
             #cursor.execute(f"SELECT * FROM producao WHERE DATE(dataEhorario) = '{day}-{month}-{year}';")
         pesquisaMes = tk.Button(tela_porperiodo_ano,text="Pesquisar",font=("Comic Sans MS", 16),fg="white",bg="#170C22",command= monthSearch)
-        pesquisaMes.grid(row=1, column=2, padx=(10,40), pady=0)
+        pesquisaMes.grid(row=1, column=2, padx=(10,320), pady=0)
 
-        year_result(tela_porperiodo_ano,130,160)
         def year_result(frame,sizex,sizey):
             year_int = int(year)
             labelname = tk.Frame(frame, bg="black")
-            labelname.pack(fill="both", expand=False, padx=sizex, pady=sizey)
+            labelname.grid(row=2, column=0, columnspan=3, padx=sizex, pady=sizey)
+            labelname.grid_configure(padx=(220, 220))
 
     
             scrollname = tk.Scrollbar(labelname)
-            scrollname.pack(side="right", fill="y")
+            scrollname.grid(row=0, column=1, sticky="ns")
 
             textname = tk.Text(labelname,bg="black",fg="white",yscrollcommand=scrollname.set)
-            textname.pack(side="left", fill="both", expand=False)
+            textname.grid(row=0, column=0)
 
             scrollname.config(command=textname.yview)
 
@@ -290,16 +291,17 @@ def porperiodo():
                     case 12:
                         mesemquestao = "dez."
                 apocalipse = ""
-                if ((year_int % 4 == 0 and year_int % 100 != 0) or (year_int % 400 == 0)) and (mm == "02" or mm == "2"): apocalipse = "29"
-                elif mm == "02" or mm == "2": apocalipse = "28"
-                elif mm in ["01","1","03","3","05","5","07","7","08","8","10","12"]: apocalipse = "31"
+                if ((year_int % 4 == 0 and year_int % 100 != 0) or (year_int % 400 == 0)) and mm == 2: apocalipse = "29"
+                elif mm == 2: apocalipse = "28"
+                elif mm in [1,3,5,7,8,10,12]: apocalipse = "31"
                 else: apocalipse = "30"
-                cursor.execute(f"SELECT COUNT(*) FROM producao WHERE dataEhorario BETWEEN '{year_int}-{mm}-01 00:00:00' AND '{year_int}-{mm}-{apocalipse} 23:59:59'")
+                cursor.execute(f"SELECT COUNT(*) FROM producao WHERE dataEhorario BETWEEN '{int(year):04d}-{mm:02d}-01 00:00:00' AND '{int(year):04d}-{mm:02d}-{int(apocalipse)} 23:59:59'")
                 total_mes = cursor.fetchone()[0]
                 textname.insert("end", f"{mesemquestao} | {total_mes}\n")
             textname.insert("end", f"\n T O T A L  A N U A L  :  {total}")
             textname.config(state="disabled")
-              
+        year_result(tela_porperiodo_ano,130,160)
+
         def voltar_ano():
             porperiodo()
         botaoVoltar_ano = tk.Button(tela_porperiodo_ano,text="←",font=("Comic Sans MS", 25),fg="white",bg="#361C29",command= voltar_ano)
@@ -361,10 +363,6 @@ def main_menu():
 main_menu()
 
 
-#cursor.execute("SELECT COUNT(*) FROM usuarios")
-
-
-
 janela.mainloop()
-#cursor.close()
-#conexao.close()
+cursor.close()
+conexao.close()
