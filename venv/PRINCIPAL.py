@@ -94,8 +94,9 @@ def porperiodo():
 
                 def hourSearch():
                     hour = hora.get()
-                    porperiodoHora(year,month,day,hour)
-                    #cursor.execute(f"SELECT * FROM producao WHERE DATE(dataEhorario) = '{day}-{month}-{year}';")
+                    if hour.isdigit():
+                        hourInt = int(hour)
+                        if hourInt < 24: porperiodoHora(year,month,day,hour)
                 pesquisaHora = tk.Button(tela_porperiodo_dia,text="Pesquisar",font=("Comic Sans MS", 16),fg="white",bg="#170C22",command= hourSearch)
                 pesquisaHora.grid(row=1, column=2, padx=(10,320), pady=0)
 
@@ -156,8 +157,15 @@ def porperiodo():
 
             def daySearch():
                 day = dia.get()
-                porperiodoDia(year,month,day)
-                #cursor.execute(f"SELECT * FROM producao WHERE DATE(dataEhorario) = '{day}-{month}-{year}';")
+                if day.isdigit():
+                    dayInt = int(day)
+                    apocalipse = ""
+                    yearInt = int(year)
+                    if ((yearInt % 4 == 0 and yearInt % 100 != 0) or (yearInt % 400 == 0)) and month == 2: apocalipse = 29
+                    elif month == 2: apocalipse = 28
+                    elif month in [1,3,5,7,8,10,12]: apocalipse = 31
+                    else: apocalipse = 30
+                    if dayInt <= apocalipse and dayInt > 0: porperiodoDia(year,month,day)
             pesquisaDia = tk.Button(tela_porperiodo_mes,text="Pesquisar",font=("Comic Sans MS", 16),fg="white",bg="#170C22",command= daySearch)
             pesquisaDia.grid(row=1, column=2, padx=(10,320), pady=0)
 
@@ -236,8 +244,9 @@ def porperiodo():
 
         def monthSearch():
             month = mes.get()
-            porperiodoMes(year,month)
-            #cursor.execute(f"SELECT * FROM producao WHERE DATE(dataEhorario) = '{day}-{month}-{year}';")
+            if month.isdigit():
+                monthInt = int(month)
+                if monthInt < 13 and monthInt > 0: porperiodoMes(year,month)
         pesquisaMes = tk.Button(tela_porperiodo_ano,text="Pesquisar",font=("Comic Sans MS", 16),fg="white",bg="#170C22",command= monthSearch)
         pesquisaMes.grid(row=1, column=2, padx=(10,320), pady=0)
 
@@ -332,7 +341,8 @@ def porperiodo():
 
     def yearSearch():
         year = ano.get()
-        porperiodoAno(year)
+        if year.isdigit():
+            porperiodoAno(year)
     pesquisaAno = tk.Button(tela_porperiodo,text="Pesquisar",font=("Comic Sans MS", 20),fg="white",bg="#170C22",command= yearSearch)
     pesquisaAno.grid(row=5, column=2, padx=(35,0), pady=(450,0))
 
@@ -518,9 +528,9 @@ def entredatas():
     hh2.grid(row=6, column=5, padx=0, pady=0)
     hh2.insert(0, "00")
     def digitarhh2(event):
-        if hh.get() == "00":
-            hh.delete(0, tk.END)
-            hh.config(fg="#363636")
+        if hh2.get() == "00":
+            hh2.delete(0, tk.END)
+            hh2.config(fg="#363636")
     def sairhh2(event):
         if hh2.get() == "":
             hh2.insert(0, "00")
@@ -567,9 +577,42 @@ def entredatas():
 
 
 
-    def search():
+    def entreperiodos_result():
         year = ano.get()
-    pesquisa = tk.Button(tela_entredatas,text="Pesquisar",font=("Comic Sans MS", 20),fg="white",bg="#170C22",command= search)
+        month = mes.get()
+        day = dia.get()
+        hour = hh.get()
+        minute = min.get()
+        second = seg.get()
+
+        year2 = ano2.get()
+        month2 = mes2.get()
+        day2 = dia2.get()
+        hour2 = hh2.get()
+        minute2 = min2.get()
+        second2 = seg2.get()
+
+        cursor.execute(f"SELECT COUNT(*) FROM producao WHERE dataEhorario BETWEEN '{int(year):04d}-{int(month):02d}-{int(day):02d} {int(hour or 0):02d}:{int(minute or 0):02d}:{int(second or 0):02d}' AND '{int(year2):04d}-{int(month2):02d}-{int(day2):02d} {int(hour2 or 0):02d}:{int(minute2 or 0):02d}:{int(second2 or 0):02d}';")
+        total = cursor.fetchone()[0]
+
+        labelname = tk.Frame(tela_entredatas, bg="black")
+        labelname.grid(row=9, column=0, columnspan=1000, padx=0, pady=(90,0))
+        labelname.grid_configure(padx=(220, 220))
+    
+        scrollname = tk.Scrollbar(labelname)
+        scrollname.grid(row=0, column=1, sticky="ns")
+
+        textname = tk.Text(labelname,bg="black",fg="white",yscrollcommand=scrollname.set,width=60,height=8)
+        textname.grid(row=0, column=0)
+
+        scrollname.config(command=textname.yview)
+
+        textname.config(state="normal")
+        textname.delete("1.0", "end")
+        textname.insert("end", f"\n T O T A L  :  {total}  R E G I S T R O S")
+        textname.config(state="disabled")
+    
+    pesquisa = tk.Button(tela_entredatas,text="Pesquisar",font=("Comic Sans MS", 20),fg="white",bg="#170C22",command= entreperiodos_result)
     pesquisa.grid(row=8, column=4, padx=0, pady=0)
 
 def main_menu():
@@ -580,7 +623,6 @@ def main_menu():
     botao2.grid(row=6, column=0, padx=256, pady=(50,0))
 
 main_menu()
-
 
 janela.mainloop()
 cursor.close()
