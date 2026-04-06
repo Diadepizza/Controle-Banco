@@ -2,7 +2,7 @@ import serial
 from db import conectar
 import time
 
-arduino = serial.Serial('COM3', 9600)
+arduino = serial.Serial('COM4', 9600)
 conexao = conectar()
 cursor = conexao.cursor()
 

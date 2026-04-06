@@ -161,9 +161,10 @@ def porperiodo():
                     dayInt = int(day)
                     apocalipse = ""
                     yearInt = int(year)
-                    if ((yearInt % 4 == 0 and yearInt % 100 != 0) or (yearInt % 400 == 0)) and month == 2: apocalipse = 29
-                    elif month == 2: apocalipse = 28
-                    elif month in [1,3,5,7,8,10,12]: apocalipse = 31
+                    monthInt = int(month)
+                    if ((yearInt % 4 == 0 and yearInt % 100 != 0) or (yearInt % 400 == 0)) and monthInt == 2: apocalipse = 29
+                    elif monthInt == 2: apocalipse = 28
+                    elif monthInt in [1,3,5,7,8,10,12]: apocalipse = 31
                     else: apocalipse = 30
                     if dayInt <= apocalipse and dayInt > 0: porperiodoDia(year,month,day)
             pesquisaDia = tk.Button(tela_porperiodo_mes,text="Pesquisar",font=("Comic Sans MS", 16),fg="white",bg="#170C22",command= daySearch)
