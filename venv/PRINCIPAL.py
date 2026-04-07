@@ -620,7 +620,7 @@ def main_menu():
     showFrame(tela_menu)
     botao1 = tk.Button(tela_menu,text="Produção por Período",font=("Comic Sans MS", 24),bg="#170C22",fg="white",width=28,command=porperiodo)
     botao1.grid(row=5, column=0, padx=256, pady=(450,0))
-    botao2 = tk.Button(tela_menu,text="Produção por Dia",font=("Comic Sans MS", 24),bg="#170C22",fg="white",width=28,command=entredatas)
+    botao2 = tk.Button(tela_menu,text="Entre Datas",font=("Comic Sans MS", 24),bg="#170C22",fg="white",width=28,command=entredatas)
     botao2.grid(row=6, column=0, padx=256, pady=(50,0))
 
 main_menu()
